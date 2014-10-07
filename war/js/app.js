@@ -4,6 +4,18 @@ $(document).foundation();
 
 $(function() {
 	
+	//build out section headers
+	var template = $('#headerTemplate').html();	  
+	
+	html = Mustache.to_html(template, {sectionName: "Welcome to our Wedding website!"});
+	$('#welcome').html(html);		
+	html = Mustache.to_html(template, {sectionName: "About Us"});
+	$('#about').html(html);		
+	html = Mustache.to_html(template, {sectionName: "Our Story"});
+	$('#story').html(html);		
+	html = Mustache.to_html(template, {sectionName: "Contact Us"});
+	$('#contact').html(html);		
+	
 	// page smooth scrolling
 	$(function() {
 		$('a.scroll').click(function(e) {
@@ -17,8 +29,39 @@ $(function() {
 		});
 	});
 	
+	//form validation n submit -----------
+	var valid = false;
+	$('#msgform').on('invalid', function() {
+		console.log('invalid');
+		valid = false;
+	}).on('valid', function() {
+		console.log('valid');
+		valid = true;
+	});	
+	//  SAVE -------------
+	$("#msgform").submit(function(e) {
+		// prevent normal submit behaviour
+		console.log('submit');
+		e.preventDefault();
+
+		if (valid == false) {
+			console.log('exiting');
+			return;
+		}
+
+		var msgTxt = format(escapeHtml($('#msgtxt').val()));
+		var nameTxt = escapeHtml($('#nametxt').val());
+		var fromEmail = escapeHtml($('#emailtxt').val());
+		var posturl = '/SendMsg?fromEmail=' +fromEmail+ '&msg=' + msgTxt+ '&fromName='+nameTxt;
+
+		serverCall(posturl, saveDone);
+	});	
+	
 });
 
+function saveDone(data) {
+	 alert('done '+data);
+}  
 
 function scrollTo(ahref) {
 	var target = ahref.attr("href"); // Get the target
@@ -34,4 +77,34 @@ function scrollTo(ahref) {
 		});
 	}
 	return false;
+}
+
+//helper methods ---------------
+function format(msgTxt) {
+	msgTxt = msgTxt.replace(/\n\r?/g, '<br />');
+	return msgTxt;
+}
+
+var entityMap = {
+	"&" : "%26",
+	"+" : "%2B",
+	"%" : "%25"
+};
+
+function escapeHtml(string) {
+	return String(string).replace(/[&+%]/g, function(s) {
+		return entityMap[s];
+	});
+}
+
+function serverCall(url, callFunction) {
+	$.ajax({
+		url : url,
+		data : '',
+		cache : false
+	}).done(function(data) {
+		callFunction(data);
+	}).fail(function() {
+		$('#msgerror').show(200);
+	});	
 }

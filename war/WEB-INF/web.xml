@@ -5,6 +5,14 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+	<servlet>
+		<servlet-name>SendMsgServlet</servlet-name>
+		<servlet-class>com.kimandnigel.allyn.SendMsgServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SendMsgServlet</servlet-name>
+		<url-pattern>/SendMsg</url-pattern>
+	</servlet-mapping>
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

@@ -14,6 +14,18 @@
 <link rel="stylesheet" href="stylesheets/foundation.css" />
 <link rel="stylesheet" href="stylesheets/app.css" />
 <script src="js/vendor/modernizr.js"></script>
+<script type="text/javascript" src="js/vendor/mustache.js"></script>
+
+<script id="headerTemplate" type="text/template">
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="sectionContainer">
+				<p class="subHeader">{{sectionName}}</p>
+				<span class="hearts"></span>
+			</div>
+		</div>
+	</div>
+</script>
 </head>
 <body>
 
@@ -77,13 +89,7 @@
 	</div>
 
 	<!-- ================ Welcome ================================= -->
-	<div class="row">
-		<div class="small-12 columns">
-			<div class="sectionContainer">
-				<p class="subHeader">Welcome to our Wedding website!</p>
-				<span class="hearts"></span>
-			</div>
-		</div>
+	<div class="row" id="welcome">
 	</div>
 	<div class="row">
 		<div class="small-12 columns">
@@ -113,13 +119,7 @@
 
 	<!-- ================ ABOUT ================================= -->
 	<div id="aboutus" class="full-row section-odd">
-		<div class="row">
-			<div class="small-12 columns">
-				<div class="sectionContainer">
-					<p class="subHeader">About Us</p>
-					<span class="hearts"></span>
-				</div>
-			</div>
+		<div class="row" id="about">
 		</div>
 		<div class="row">
 
@@ -144,13 +144,7 @@
 
 	<!-- ================ OUR STORY ================================= -->
 	<div id="ourstory" class="full-row">
-		<div class="row">
-			<div class="small-12 columns">
-				<div class="sectionContainer">
-					<p class="subHeader">Our Story</p>
-					<span class="hearts"></span>
-				</div>
-			</div>
+		<div class="row" id="story">
 		</div>
 		<div class="row">
 			<p>To be filled in .. </p>
@@ -159,13 +153,7 @@
 
 	<!-- ================ CONTACT US ================================= -->
 	<div id="contactus" class="full-row section-odd">
-		<div class="row">
-			<div class="small-12 columns">
-				<div class="sectionContainer">
-					<p class="subHeader">Contact Us</p>
-					<span class="hearts"></span>
-				</div>
-			</div>
+		<div class="row" id="contact">
 		</div>
 		<div class="row">
 			<div class="small-12 columns">
@@ -201,7 +189,8 @@
 					</div>
 				</form>
 			</div>
-		</div>
+		</div>	
+		
 	</div>
 
 	<!-- ================ FOOTER links ================================= -->
