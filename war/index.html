@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Foundation | Welcome</title>
+<title>Allen &amp; Lynette</title>
 
 <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'
 	type='text/css'
@@ -13,16 +13,29 @@
 >
 <link rel="stylesheet" href="stylesheets/foundation.css" />
 <link rel="stylesheet" href="stylesheets/app.css" />
+<link rel="stylesheet" href="stylesheets/animate.css" />
 <script src="js/vendor/modernizr.js"></script>
 <script type="text/javascript" src="js/vendor/mustache.js"></script>
 
 <script id="headerTemplate" type="text/template">
-	<div class="row">
-		<div class="small-12 columns">
-			<div class="sectionContainer">
-				<p class="subHeader">{{sectionName}}</p>
-				<span class="hearts"></span>
-			</div>
+	<div class="small-12 columns">
+		<div class="sectionContainer">
+			<p class="subHeader">{{sectionName}}</p>
+			<span class="hearts"></span>
+		</div>
+	</div>
+</script>
+
+<script id="photoTemplate" type="text/template">
+	{{#photos}}
+	<li><a href="{{img}}"><img data-caption="{{caption}}" src="{{img_th}}"></a></li>
+	{{/photos}}
+</script>
+
+<script id="msgTemplate" type="text/template">
+	<div class="large-12 columns">
+		<div data-alert class="alert-box {{msg-type}}">
+			 {{msg}}<a href="#" class="close">close &times;</a>
 		</div>
 	</div>
 </script>
@@ -62,6 +75,10 @@
 				</li>
 				<li class="divider"></li>
 				<li>
+					<a href="#photos" class="scroll">Photos</a>
+				</li>
+				<li class="divider"></li>
+				<li>
 					<a href="#contactus" class="scroll">Contact Us</a>
 				</li>
 			</ul>
@@ -82,20 +99,22 @@
 	<!-- ================ MAIN IMAGE ================================= -->
 	<div class="full-row text-center">
 		<img
-			data-interchange="[img/lynandfriendMob.jpg, (default)], 
-			[img/lynandfriend.jpg, (medium)],
-			[img/lynandfriend.jpg, (large)]"
+			data-interchange="[img/mainpicMob.jpg, (default)], 
+			[img/mainpic.jpg, (medium)],
+			[img/mainpic.jpg, (large)]"
 		>
 	</div>
 
 	<!-- ================ Welcome ================================= -->
-	<div class="row" id="welcome">
-	</div>
-	<div class="row">
-		<div class="small-12 columns">
-			<p class="">We’re so happy to share with you all there is to know about our
-				happyness: how we meet, the proposal, the wedding location and the events that will
-				follow. Follow on to read about the story of our love!</p>
+	<div id="welcomefull" class="full-row ">
+		<div class="row" id="welcome">
+		</div>
+		<div class="row contentDiv">
+			<div class="small-12 columns">
+				<p class="">We’re so happy to share with you all there is to know about our
+					happyness: how we meet, the proposal, the wedding location and the events that will
+					follow. Follow on to read about the story of our love!</p>
+			</div>
 		</div>
 	</div>
 
@@ -105,7 +124,7 @@
 			<p class="">We are getting married ..</p>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row contentDiv">
 		<div class="large-6 medium-6 columns">
 			<p class="dateHeader">on: 6th December, 2014</p>
 		</div>
@@ -121,7 +140,7 @@
 	<div id="aboutus" class="full-row section-odd">
 		<div class="row" id="about">
 		</div>
-		<div class="row">
+		<div class="row contentDiv">
 
 			<!-- ALLEN -->
 			<div class="large-6 medium-6 columns">
@@ -146,13 +165,26 @@
 	<div id="ourstory" class="full-row">
 		<div class="row" id="story">
 		</div>
-		<div class="row">
+		<div class="row contentDiv">
 			<p>To be filled in .. </p>
 		</div>
 	</div>
+	
+	<!-- ================ PHOTOS ================================= -->
+	<div id="photos" class="full-row section-odd">
+		<div class="row" id="potoshead">
+		</div>
+		<div class="row contentDiv">
+			<div class="small-12 columns" >
+				<ul class="clearing-thumbs text-center" data-clearing id="photodiv">
+				</ul>
+			</div>
+			
+		</div>		
+	</div>
 
 	<!-- ================ CONTACT US ================================= -->
-	<div id="contactus" class="full-row section-odd">
+	<div id="contactus" class="full-row">
 		<div class="row" id="contact">
 		</div>
 		<div class="row">
@@ -160,7 +192,7 @@
 				<p>We would love to hear from you! Do send us a message using form below.</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row contentDiv">
 			<div class="small-12 columns">
 				<form data-abide id="msgform">
 					<div class="row">
@@ -191,6 +223,8 @@
 			</div>
 		</div>	
 		
+		<div class="row" id="msgarea">
+		</div>		
 	</div>
 
 	<!-- ================ FOOTER links ================================= -->
@@ -224,6 +258,7 @@
 
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/foundation.min.js"></script>
+	<script src="js/vendor/jquery.viewportchecker.js"></script>
 	<script src="js/app.js"></script>
 </body>
 </html>

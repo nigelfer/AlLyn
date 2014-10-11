@@ -1,5 +1,4 @@
 
--upload source to git
 -test on phone/ipad/large screens
 -test on IE9
 -test on FF

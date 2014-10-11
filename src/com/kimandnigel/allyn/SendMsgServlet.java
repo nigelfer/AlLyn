@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SendMsgServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 700000007656710924L;
+	private static final String FROM_EMAIL = "nigelfer@gmail.com"; // site ADMIN
 	private static final String TO_EMAIL = "al.lyn.061214@gmail.com";
 	private static final String SUBJECT = "From AlLyn site.";
 
@@ -20,12 +21,16 @@ public class SendMsgServlet extends HttpServlet {
 		String fromName = req.getParameter("fromName");
 		String msg = req.getParameter("msg");
 		String fromEmail = req.getParameter("fromEmail");
-		System.out.println("fromName=" + fromName + " msg=" + msg);
+		msg = "Hi! You have a new message from - " + fromName + "( " + fromEmail + " )\n\n" +
+				"Message: '" + msg + "' \n\n";
+
+		System.out.println(" msg=" + msg);
 
 		Email email = new Email();
 		try {
-			email.sendEmail(fromEmail, TO_EMAIL, SUBJECT, msg);
+			email.sendEmail(FROM_EMAIL, TO_EMAIL, SUBJECT, msg);
 		} catch (MessagingException e) {
+			System.out.println("ERROR " + e);
 			throw new IOException("Error sending email!");
 		}
 

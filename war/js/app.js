@@ -1,32 +1,50 @@
 // Foundation JavaScript
-// Documentation can be found at: http://foundation.zurb.com/docs
+// Documentation can be found at: http://foundation.zurb.com/doc
 $(document).foundation();
 
 $(function() {
+	//photo section	  	
+	$.getJSON('data/photos.json', function(data) {
+		var photoTemplate = $('#photoTemplate').html();	
+		var folder = data.folder;
+		var phototList = data.photos;
+
+		$.each(phototList, function(i, photo) {
+			var img = folder + photo.img;
+			photo.img 		= img + ".jpg";
+			photo.img_th 	= img + "TH.jpg";
+		});
+								
+		html = Mustache.to_html(photoTemplate, data);
+		$('#photodiv').html(html);		
+		$('#photos').foundation();
+	})
+	.fail(function() {
+		console.log("error");
+	});		
 	
 	//build out section headers
-	var template = $('#headerTemplate').html();	  
-	
+	var template = $('#headerTemplate').html();	  	
 	html = Mustache.to_html(template, {sectionName: "Welcome to our Wedding website!"});
 	$('#welcome').html(html);		
 	html = Mustache.to_html(template, {sectionName: "About Us"});
 	$('#about').html(html);		
 	html = Mustache.to_html(template, {sectionName: "Our Story"});
 	$('#story').html(html);		
+	html = Mustache.to_html(template, {sectionName: "Photos"});
+	$('#potoshead').html(html);		
 	html = Mustache.to_html(template, {sectionName: "Contact Us"});
-	$('#contact').html(html);		
+	$('#contact').html(html);			
 	
 	// page smooth scrolling
-	$(function() {
-		$('a.scroll').click(function(e) {
-			e.preventDefault(); // prevent the "normal" behaviour which would be
-			// a "hard" jump
-			if ($(this).prop('back') != 'true') {
-				$('a.scroll').parent().removeClass('active');
-				$(this).parent().addClass('active');
-			}
-			scrollTo($(this));
-		});
+	$('a.scroll').click(function(e) {
+		e.preventDefault(); // prevent the "normal" behaviour which would be
+		// a "hard" jump
+		if ($(this).prop('back') != 'true') {
+			$('a.scroll').parent().removeClass('active');
+			$(this).parent().addClass('active');
+		}
+		scrollTo($(this));
 	});
 	
 	//form validation n submit -----------
@@ -38,6 +56,10 @@ $(function() {
 		console.log('valid');
 		valid = true;
 	});	
+	
+	//msg area 
+	$('#msgarea').hide();	
+	
 	//  SAVE -------------
 	$("#msgform").submit(function(e) {
 		// prevent normal submit behaviour
@@ -49,7 +71,7 @@ $(function() {
 			return;
 		}
 
-		var msgTxt = format(escapeHtml($('#msgtxt').val()));
+		var msgTxt = escapeHtml($('#msgtxt').val());
 		var nameTxt = escapeHtml($('#nametxt').val());
 		var fromEmail = escapeHtml($('#emailtxt').val());
 		var posturl = '/SendMsg?fromEmail=' +fromEmail+ '&msg=' + msgTxt+ '&fromName='+nameTxt;
@@ -57,11 +79,19 @@ $(function() {
 		serverCall(posturl, saveDone);
 	});	
 	
-});
-
-function saveDone(data) {
-	 alert('done '+data);
-}  
+	//animate headers
+	$('.sectionContainer').addClass("hidden").viewportChecker({
+        classToAdd: 'visible animated swing',
+        offset: 100,
+        repeat: true
+	});	
+	//animate body
+	$('.contentDiv').addClass("hidden").viewportChecker({
+		classToAdd: 'visible animated fadeInLeft',
+		offset: 100,
+		repeat: false
+	});	
+}); 
 
 function scrollTo(ahref) {
 	var target = ahref.attr("href"); // Get the target
@@ -72,7 +102,7 @@ function scrollTo(ahref) {
 		$('html, body').stop().animate({
 			scrollTop : top
 		}, 1000, function() {
-			location.hash = target; // attach the hash (#jumptarget) to the
+			//location.hash = target; // attach the hash (#jumptarget) to the
 			// pageurl
 		});
 	}
@@ -97,6 +127,9 @@ function escapeHtml(string) {
 	});
 }
 
+function saveDone(data) {
+	showMessage("Thanks for messaging us!", "success");
+} 
 function serverCall(url, callFunction) {
 	$.ajax({
 		url : url,
@@ -105,6 +138,14 @@ function serverCall(url, callFunction) {
 	}).done(function(data) {
 		callFunction(data);
 	}).fail(function() {
-		$('#msgerror').show(200);
+		showMessage("Oops! there was an error, please try later", "alert");
 	});	
+}
+
+function showMessage(msg, type) {
+	var msgTemplate = $('#msgTemplate').html();	
+	var html = Mustache.to_html(msgTemplate, {msg: msg, "msg-type": type});
+	$('#msgarea').html(html);	
+	$('#msgarea').foundation();
+	$('#msgarea').show(200);	
 }

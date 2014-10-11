@@ -1,0 +1,21 @@
+{
+	"folder": "img/photos/",
+	"photos":
+	[
+		{
+			"img":"img1",
+			"caption":"caption 1"
+		},
+		{
+			"img":"img2"
+		},
+		{
+			"img":"img3"
+		},
+		{
+			"img":"img4"
+		}		
+		
+	]
+ 
+}

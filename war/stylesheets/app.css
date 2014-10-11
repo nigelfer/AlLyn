@@ -7946,3 +7946,8 @@ body {
 button:hover, button:focus, .button:hover, .button:focus {
   background-color: #ec6d65;
 }
+
+/* line 120, ../sass/app.scss */
+.clearing-thumbs li {
+  margin-bottom: 10px;
+}

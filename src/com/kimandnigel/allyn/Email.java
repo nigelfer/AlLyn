@@ -21,6 +21,7 @@ public class Email {
 		msg.setFrom(new InternetAddress(fromEmail));
 		msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 		msg.addRecipient(Message.RecipientType.TO, new InternetAddress("nigelfer@gmail.com"));
+		msg.addRecipient(Message.RecipientType.TO, new InternetAddress("allen_1811@yahoo.com"));
 		msg.setSubject(subject);
 		msg.setText(msgBody);
 
